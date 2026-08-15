@@ -1,3 +1,7 @@
+type QuickActionsProps = {
+  onGenerateClick: () => void;
+};
+
 function SparklesIcon() {
   return (
     <svg
@@ -12,11 +16,12 @@ function SparklesIcon() {
   );
 }
 
-export function QuickActions() {
+export function QuickActions({ onGenerateClick }: QuickActionsProps) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <button
         type="button"
+        onClick={onGenerateClick}
         className="inline-flex items-center justify-center gap-2 rounded-xl bg-sage-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sage-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
       >
         <SparklesIcon />
