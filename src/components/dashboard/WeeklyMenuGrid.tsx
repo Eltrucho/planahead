@@ -1,7 +1,18 @@
-import { weeklyMenu } from "@/lib/mock-data";
 import { MealSlot } from "./MealSlot";
 
-export function WeeklyMenuGrid() {
+const DAYS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+type WeeklyMenuGridProps = {
+  menu?: Record<string, { lunch: string | null; dinner: string | null }>;
+};
+
+export function WeeklyMenuGrid({ menu }: WeeklyMenuGridProps) {
+  const weeklyMenu = DAYS.map((day) => ({
+    day,
+    shortDay: day.slice(0, 3),
+    lunch: menu?.[day]?.lunch || null,
+    dinner: menu?.[day]?.dinner || null,
+  }));
   return (
     <section aria-labelledby="weekly-menu-heading">
       <div className="mb-5">

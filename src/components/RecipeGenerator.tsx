@@ -6,9 +6,10 @@ type RecipeMode = "quick" | "categories";
 
 interface RecipeGeneratorProps {
   onClose?: () => void;
+  onRecipeGenerated?: (recipe: any) => void;
 }
 
-export function RecipeGenerator({ onClose }: RecipeGeneratorProps) {
+export function RecipeGenerator({ onClose, onRecipeGenerated }: RecipeGeneratorProps) {
   const [mode, setMode] = useState<RecipeMode>("categories");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [customIngredients, setCustomIngredients] = useState<string>("");
@@ -27,8 +28,17 @@ export function RecipeGenerator({ onClose }: RecipeGeneratorProps) {
       categories: selectedCategories,
       customIngredients: mode === "categories" ? customIngredients : "",
     };
-    console.log("Generando receta con:", payload);
+
+    if (onRecipeGenerated) {
+      onRecipeGenerated(payload);
+    }
+
+    if (onClose) {
+      onClose();
+    }
   };
+
+
 
   return (
     /* Capa contenedora flotante con fondo semitransparente y desenfoque */
