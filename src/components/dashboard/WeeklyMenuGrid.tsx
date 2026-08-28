@@ -41,8 +41,8 @@ export function WeeklyMenuGrid({ menu }: WeeklyMenuGridProps) {
             </header>
 
             <div className="flex flex-col gap-2">
-              <MealSlot label="Almuerzo" dish={day.lunch} />
-              <MealSlot label="Cena" dish={day.dinner} />
+            <MealSlot label="Almuerzo" dish={day.lunch || ""} />
+            <MealSlot label="Cena" dish={day.dinner || ""} />
             </div>
           </article>
         ))}
