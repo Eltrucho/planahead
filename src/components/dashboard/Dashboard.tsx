@@ -24,6 +24,7 @@ export function Dashboard({
   onCloseRecipeGenerator,
 }: DashboardProps) {
   const [localShowGenerator, setLocalShowGenerator] = useState(false);
+  const [isPreferencesOpen, setIsPreferencesOpen] = useState(false);
   const [weeklyMenu, setWeeklyMenu] = useState<Record<string, { lunch: string | null; dinner: string | null }>>({
     Lunes: { lunch: null, dinner: null },
     Martes: { lunch: null, dinner: null },
@@ -52,21 +53,26 @@ export function Dashboard({
 
     handleClose();
   };
+
   const handleToggle = onToggleRecipeGenerator || (() => setLocalShowGenerator(true));
   const handleClose = onCloseRecipeGenerator || (() => setLocalShowGenerator(false));
-  return (
 
+  return (
     <div className="flex min-h-full flex-col">
-      <Header activeTab={activeTab} onTabChange={onTabChange} />
+      <Header
+        activeTab={activeTab}
+        onTabChange={onTabChange}
+        onOpenPreferences={() => setIsPreferencesOpen(true)}
+      />
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      {activeTab === "menu" && (
+        {activeTab === "menu" && (
           <div className="mb-8 space-y-6">
             <QuickActions onGenerateClick={handleToggle} />
             {(showRecipeGenerator || localShowGenerator) && (
-              <RecipeGenerator 
-                onClose={handleClose} 
-                onRecipeGenerated={handleRecipeGenerated} 
+              <RecipeGenerator
+                onClose={handleClose}
+                onRecipeGenerated={handleRecipeGenerated}
               />
             )}
           </div>
@@ -78,6 +84,6 @@ export function Dashboard({
           <ShoppingListView />
         )}
       </main>
-      </div>
-    );
+    </div>
+  );
 }
