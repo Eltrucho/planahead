@@ -1,29 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "PlanAhead",
-  description: "Planifica tu futuro con claridad",
+  title: "Quécomo - Planificador de Menús",
+  description: "Planifica tus comidas de la semana con IA",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html
-      lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="es">
+      <body className="min-h-screen bg-[#e9e6df] text-zinc-800 antialiased transition-colors duration-200 dark:bg-zinc-950 dark:text-zinc-100">
+        {children}
+      </body>
     </html>
   );
 }

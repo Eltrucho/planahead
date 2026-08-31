@@ -1,52 +1,65 @@
-import { MealSlot } from "./MealSlot";
+import React from "react";
 
-const DAYS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+type MealPlan = {
+  lunch: string | null;
+  dinner: string | null;
+};
 
 type WeeklyMenuGridProps = {
-  menu?: Record<string, { lunch: string | null; dinner: string | null }>;
+  menu: Record<string, MealPlan>;
 };
 
 export function WeeklyMenuGrid({ menu }: WeeklyMenuGridProps) {
-  const weeklyMenu = DAYS.map((day) => ({
-    day,
-    shortDay: day.slice(0, 3),
-    lunch: menu?.[day]?.lunch || null,
-    dinner: menu?.[day]?.dinner || null,
-  }));
+  const days = Object.keys(menu);
+
   return (
-    <section aria-labelledby="weekly-menu-heading">
-      <div className="mb-5">
-        <h2
-          id="weekly-menu-heading"
-          className="text-lg font-semibold text-sage-700 sm:text-xl"
-        >
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-xl font-bold text-emerald-900 dark:text-emerald-400">
           Menú Semanal
         </h2>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Planifica tus comidas de la semana de un vistazo.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7">
-        {weeklyMenu.map((day) => (
-          <article
-            key={day.day}
-            className="flex flex-col gap-3 rounded-2xl border border-sage-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
-          >
-            <header className="border-b border-sage-100 pb-2">
-              <p className="text-xs font-medium uppercase tracking-wider text-sage-500 sm:hidden">
-                {day.shortDay}
-              </p>
-              <p className="text-base font-semibold text-sage-700">{day.day}</p>
-            </header>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
+        {days.map((day) => {
+          const plan = menu[day];
+          return (
+            <div
+              key={day}
+              className="flex flex-col rounded-2xl border border-stone-200/80 bg-white/80 p-4 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900/90"
+            >
+              <h3 className="mb-3 font-semibold text-zinc-800 dark:text-zinc-100">
+                {day}
+              </h3>
 
-            <div className="flex flex-col gap-2">
-            <MealSlot label="Almuerzo" dish={day.lunch || ""} />
-            <MealSlot label="Cena" dish={day.dinner || ""} />
+              <div className="flex flex-1 flex-col justify-between space-y-3">
+                {/* Almuerzo */}
+                <div className="rounded-xl border border-emerald-900/10 bg-emerald-50/50 p-2.5 transition-colors dark:border-emerald-500/20 dark:bg-emerald-950/30">
+                  <span className="block text-[10px] font-bold tracking-wider text-emerald-800 dark:text-emerald-400">
+                    ALMUERZO
+                  </span>
+                  <p className="mt-1 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                    {plan?.lunch || "—"}
+                  </p>
+                </div>
+
+                {/* Cena */}
+                <div className="rounded-xl border border-emerald-900/10 bg-emerald-50/50 p-2.5 transition-colors dark:border-emerald-500/20 dark:bg-emerald-950/30">
+                  <span className="block text-[10px] font-bold tracking-wider text-emerald-800 dark:text-emerald-400">
+                    CENA
+                  </span>
+                  <p className="mt-1 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                    {plan?.dinner || "—"}
+                  </p>
+                </div>
+              </div>
             </div>
-          </article>
-        ))}
+          );
+        })}
       </div>
-    </section>
+    </div>
   );
 }

@@ -58,7 +58,7 @@ export function Dashboard({
   const handleClose = onCloseRecipeGenerator || (() => setLocalShowGenerator(false));
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex min-h-screen flex-col bg-stone-100/70 dark:bg-zinc-950 transition-colors duration-200">
       <Header
         activeTab={activeTab}
         onTabChange={onTabChange}
